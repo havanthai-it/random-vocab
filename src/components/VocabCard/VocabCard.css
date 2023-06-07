@@ -1,0 +1,24 @@
+.VocabCard-card {
+    position: relative;
+    max-width: 600px;
+    display: block;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.VocabCard-word {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.VocabCard-meaning {
+    font-size: 3em;
+}
+
+.VocabCard-bookmark {
+    position: absolute;
+    display: block;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}

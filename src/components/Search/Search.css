@@ -1,0 +1,8 @@
+.Search-textfield input {
+    background-color: #fff;
+    border-radius: inherit;
+}
+
+.Search-textfield .MuiOutlinedInput-notchedOutline {
+    display: none;
+}

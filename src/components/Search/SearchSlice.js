@@ -3,14 +3,20 @@ import { createSlice } from '@reduxjs/toolkit';
 const searchSlice = createSlice({
     name: 'search',
     initialState: {
-        searchValue: ''
+        word: '',
+        meaning: '',
+        loading: false
     },
     reducers: {
         searchVocab: (state, action) => {
-            state.searchValue = action.payload
+            state.word = action.payload.word;
+            state.meaning = action.payload.meaning;
+        },
+        toggleLoading: (state, action) => {
+            state.loading = action.payload;
         }
     }
 })
 
-export const { searchVocab } = searchSlice.actions;
+export const { searchVocab, toggleLoading } = searchSlice.actions;
 export default searchSlice.reducer;
