@@ -9,13 +9,17 @@ const BookmarkList = (props) => {
     const bookmarks = useSelector((state) => state.bookmarkList.bookmarks);
 
     return (
-        <div className='BookmarkList'>
-            <h2 style={{marginLeft: '14px'}}>Bookmarks</h2>
-            <List>
-                { bookmarks.map(item => <ListItem key={item.word} className='BookmarkList-listItem'>
-                    <ListItemText primary={item.word} secondary={item.meaning} />
-                </ListItem>) }
-            </List>
+        <div>
+            { (!bookmarks || bookmarks.length === 0) ? '' :
+                <div className='BookmarkList'>
+                    <h2 style={{marginLeft: '14px'}}>Bookmarks</h2>
+                    <List>
+                        { bookmarks.map(item => <ListItem key={item.word} className='BookmarkList-listItem'>
+                            <ListItemText primary={item.word} secondary={item.meaning} />
+                        </ListItem>) }
+                    </List>
+                </div>
+            }
         </div>
     );
 }

@@ -11,12 +11,17 @@ import './Search.css';
 import '../../common/common.css';
 
 
+const ColorTextField = styled(TextField)({
+    borderColor: "#fff",
+    '&:hover': {
+        borderColor: "#fff",
+    },
+});
 
 const Search = ({ mainColor, setMainColor }) => {
     const [loading, setLoading] = useState();
     const [searchValue, setSearchValue] = useState();
     const dispatch = useDispatch();
-    const ref = useRef(null);
 
     // useEffect(() => {
     //     
@@ -31,9 +36,7 @@ const Search = ({ mainColor, setMainColor }) => {
     }
 
     const search = async () => {
-        dispatch(searchVocab({ word: searchValue, meaning: 'ngẫu nhiên' }));
-
-        setMainColor(COLOR_LIST[Math.floor(Math.random() * COLOR_LIST.length)]);
+        translate(searchValue);
     }
 
     const random = async () => {
@@ -51,26 +54,30 @@ const Search = ({ mainColor, setMainColor }) => {
                 const randomWord = data.word;
                 setSearchValue(randomWord);
 
-                fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q=${randomWord}`, {
-                        method: 'GET'
-                    })
-                    .then((response) => {
-                        response.text().then((text) => {
-                            try {
-
-                                // Dispatch
-                                dispatch(searchVocab({ word: randomWord, meaning: extractTranslation(JSON.parse(text)) }));
-                                dispatch(toggleLoading(false));
-        
-                                setMainColor(COLOR_LIST[Math.floor(Math.random() * COLOR_LIST.length)]);
-                            } catch (e) {
-                                console.log(e);
-                            }
-                        });
-                    })
-                    .catch((err) => console.log(err.message));
+                translate(randomWord);
             })
             .catch((err) => console.log(err.message));
+    }
+
+    const translate = (word) => {
+        fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q=${word}`, {
+            method: 'GET'
+        })
+        .then((response) => {
+            response.text().then((text) => {
+                try {
+
+                    // Dispatch
+                    dispatch(searchVocab({ word: word, meaning: extractTranslation(JSON.parse(text)) }));
+                    dispatch(toggleLoading(false));
+
+                    setMainColor(COLOR_LIST[Math.floor(Math.random() * COLOR_LIST.length)]);
+                } catch (e) {
+                    console.log(e);
+                }
+            });
+        })
+        .catch((err) => console.log(err.message));
     }
 
     const ColorButton = styled(Button)({
@@ -81,18 +88,13 @@ const Search = ({ mainColor, setMainColor }) => {
         },
     });
 
-    const ColorTextField = styled(TextField)({
-        borderColor: "#fff",
-        '&:hover': {
-            borderColor: "#fff",
-        },
-    });
-
     return (
         <div>
             <Grid container direction="row" justifyContent="center" spacing={1}>
                 <Grid item width={410}>
-                    <ColorTextField fullWidth ref={ref} id="outlined-basic" label="" variant="outlined" value={searchValue} 
+                    <ColorTextField fullWidth id="outlined-basic" label="" variant="outlined" 
+                    key="textfield-search"
+                    value={searchValue} 
                     placeholder='Enter a word'
                     onChange={(event) => {setSearchValue(event.target.value)}}
                     className="Search-textfield"/>

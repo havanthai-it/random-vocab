@@ -4,9 +4,6 @@ const bookmarkListSlice = createSlice({
     name: 'bookmarkList',
     initialState: {
         bookmarks: [
-            { word: 'elephant', meaning: 'con voi' },
-            { word: 'banana', meaning: 'quả chuối' },
-            { word: 'table', meaning: 'cái bàn' }
         ]
     },
     reducers: {
